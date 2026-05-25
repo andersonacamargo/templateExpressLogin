@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const db = require('./models');
 const authController = require('./controllers/authController');
@@ -7,7 +8,7 @@ const { autenticar, somenteAdmin } = require('./middleware/auth');
 dotenv.config(); // Carrega o .env
 const app = express();
 app.use(express.json()); // Permite leitura de JSON
-
+app.use(cors()); // Permite cross plataform para utilizar o client e server em localhost
 // Rota pública: criar novo usuário
 app.post('/registrar', authController.registrar);
 

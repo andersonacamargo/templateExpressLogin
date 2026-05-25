@@ -34,11 +34,10 @@ exports.login = async (req, res) => {
   if (!usuario || !(await bcrypt.compare(senha, usuario.senha)))
     return res.status(401).json({ erro: 'Credenciais inválidas' });
 
-  // Cria token JWT com ID, nome e cargo
+  // Cria token JWT com ID e nome
   const token = jwt.sign({
     id: usuario.id,
     nome: usuario.nome,
-    cargo: usuario.cargo
   }, process.env.JWT_SECRET);
 
   // Retorna mensagem de sucesso e o token
