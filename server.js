@@ -1,19 +1,24 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import db from './models/index.js';
-import authController from './controllers/authController.js';
-import { autenticar, somenteAdmin } from'./middleware/auth.js';
-import { validateCreateProduct } from './middleware/validateUser.js'
-dotenv.config(); // Carrega o .env
+const express = require('express');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const db = require('./models');
 const app = express();
-app.use(express.json()); // Permite leitura de JSON
 app.use(cors()); // Permite cross plataform para utilizar o client e server em localhost
+app.use(express.json()); // Permite leitura de JSON
+
+
+const { autenticar, somenteAdmin } = require('./middleware/auth');
+const {validate} = require('./middleware/validateUser');
+const authController = require('./controllers/authController');
+dotenv.config(); // Carrega o .env
+
+
+
 // Rota pública: criar novo usuário
 
 
 app.post('/registrar', 
-  validateCreateProduct,
+  validate,
   authController.registrar);
 
 // Rota pública: login e geração do token
