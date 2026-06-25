@@ -1,8 +1,6 @@
 const { User } = require('../models');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
-// Rota de registro de novo usuário
+
 exports.registrar = async (req, res) => {
   try {
     const { nome, email, senha } = req.body;
@@ -31,18 +29,27 @@ exports.login = async (req, res) => {
   const usuario = await User.findOne({ where: { email } });
 
   // Verifica se encontrou e compara senha
-  if (!usuario || !(await bcrypt.compare(senha, usuario.senha)))
+  if (!usuario || !senha)
     return res.status(401).json({ erro: 'Credenciais inválidas' });
 
-  // Cria token JWT com ID e nome
-  const token = jwt.sign({
-    id: usuario.id,
-    nome: usuario.nome,
-  }, process.env.JWT_SECRET);
 
-  // Retorna mensagem de sucesso e o token
   res.json({
     mensagem: 'Login bem-sucedido',
-    token
+    nome: usuario.nome,
   });
+};
+
+exports.atividades = async (req, res) => {
+
+  const atividade = await User.findAll();
+   console.log(atividade[1].nome)
+   res.status(200).json({
+     atividades: [
+   { email: atividade[0].email,
+    nome: atividade[0].nome,
+   },
+   { email: atividade[1].email,
+    nome: atividade[1].nome,
+   }
+  ]});
 };

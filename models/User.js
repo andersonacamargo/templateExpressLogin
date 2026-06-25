@@ -1,7 +1,6 @@
-const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const User = sequelize.define('Users', {
     nome: DataTypes.STRING, // Nome do usuário
     email: { 
       type: DataTypes.STRING,
@@ -10,12 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     senha: DataTypes.STRING, // Senha que será criptografada
   });
 
-// Hook que executa antes de criar um usuário
-// Usado para criptografar a senha antes de salvar no banc
-  // Antes de salvar o usuário, criptografa a senha
-  User.beforeCreate(async (user) => {
-    user.senha = await bcrypt.hash(user.senha, 10);  // Criptografa a senha
-  }); 
 
   return User;
 };
