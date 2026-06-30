@@ -1,10 +1,10 @@
 const { User } = require('../models');
-
-
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+// Rota de registro de novo usuário
 exports.registrar = async (req, res) => {
   try {
     const { nome, email, senha } = req.body;
-
     // Cria e salva o usuário no banco
     const novoUsuario = await User.create({ nome, email, senha });
 

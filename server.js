@@ -6,10 +6,23 @@ const authController = require('./controllers/authController');
 
 dotenv.config(); // Carrega o .env
 const app = express();
-app.use(express.json()); // Permite leitura de JSON
 app.use(cors()); // Permite cross plataform para utilizar o client e server em localhost
+app.use(express.json()); // Permite leitura de JSON
+
+
+const { autenticar, somenteAdmin } = require('./middleware/auth');
+const {validate} = require('./middleware/validateUser');
+const authController = require('./controllers/authController');
+dotenv.config(); // Carrega o .env
+
+
+
 // Rota pública: criar novo usuário
-app.post('/registrar', authController.registrar);
+
+
+app.post('/registrar', 
+  validate,
+  authController.registrar);
 
 // Rota pública: login e geração do token
 app.post('/login', authController.login);
