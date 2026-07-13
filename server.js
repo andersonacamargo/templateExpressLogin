@@ -1,4 +1,3 @@
-// Atividade: criar rotas de vagas e post, deixei o exemplo do painel para lembrar que post deve ser com usuario autenticado com JWT
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';

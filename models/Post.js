@@ -14,18 +14,8 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.TEXT, // Usado TEXT em vez de STRING pois posts podem ser longos
         allowNull: false
       },
-      curtidas: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0
-      },
+
         
-// A logica de curtidas para um sistema real não é assim, 
-// criei assim para facilitar a avaliação na parte de bloqueio de curtidas usem isso para facilitar sua vida
-// se True não deve deixar curtir novamente
-      minhaCurtida: { 
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
       userID: {
         type: DataTypes.INTEGER,
         allowNull: false,

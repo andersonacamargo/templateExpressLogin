@@ -1,4 +1,3 @@
-//Atividade: incluir Vagas, importar dados do CSV, ao final devem haver 3 tabelas, 2 com dados importados e uma com usuario criado
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 import createUserModel from './User.js'; // Import the model factory function

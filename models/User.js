@@ -1,4 +1,3 @@
-//Atividade: Completar Usuario (lembre-se de atualizar o banco ou reinicia-lo)
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
