@@ -2,15 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const db = require('./models');
-const authController = require('./controllers/authController');
 
-dotenv.config(); // Carrega o .env
 const app = express();
 app.use(cors()); // Permite cross plataform para utilizar o client e server em localhost
 app.use(express.json()); // Permite leitura de JSON
 
 
-const { autenticar, somenteAdmin } = require('./middleware/auth');
 const {validate} = require('./middleware/validateUser');
 const authController = require('./controllers/authController');
 dotenv.config(); // Carrega o .env
