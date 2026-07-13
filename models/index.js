@@ -1,5 +1,10 @@
-const { Sequelize } = require('sequelize');
-require('dotenv').config(); // Carrega variáveis do .env
+//Atividade: incluir Vagas, importar dados do CSV, ao final devem haver 3 tabelas, 2 com dados importados e uma com usuario criado
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
+import createUserModel from './User.js'; // Import the model factory function
+import createPostModel from './Post.js'; // Import the model factory function
+
+dotenv.config(); // Carrega variáveis do .env
 
 // Cria conexão com o PostgreSQL usando Sequelize
 const sequelize = new Sequelize(
@@ -16,6 +21,13 @@ const sequelize = new Sequelize(
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.User = require('./User')(sequelize, Sequelize);
 
-module.exports = db;
+// Inicializa o modelo passando a instância do sequelize
+db.User = createUserModel(sequelize, Sequelize);
+db.Post = createPostModel(sequelize, Sequelize); 
+
+// Define o relacionamento (FK)
+db.Post.belongsTo(db.User, { foreignKey: 'userID', as: 'autor' });
+db.User.hasMany(db.Post, { foreignKey: 'userID', as: 'posts' });
+
+export default db;

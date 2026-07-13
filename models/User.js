@@ -1,6 +1,7 @@
+//Atividade: Completar Usuario (lembre-se de atualizar o banco ou reinicia-lo)
 
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('Users', {
+export default (sequelize, DataTypes) => {
+  const User = sequelize.define('User', {
     nome: DataTypes.STRING, // Nome do usuário
     email: { 
       type: DataTypes.STRING,
@@ -8,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     senha: DataTypes.STRING, // Senha que será criptografada
   });
+
 
 
   return User;
