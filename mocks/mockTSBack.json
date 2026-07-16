@@ -1,0 +1,115 @@
+{
+  "targetSubject": "TypeScript aplicado ao Backend com Node.js",
+  "studyPlan": {
+    "cronograma": [
+      {
+        "etapa": "Etapa 1",
+        "titulo": "Configuração do Ambiente e Tipagem Básica",
+        "conteudos": [
+          "Entendendo o compilador TypeScript (tsc) e o arquivo tsconfig.json",
+          "Tipos primitivos, Arrays, Tuplas, Enums e Object Types",
+          "Diferenças práticas entre 'interface' e 'type alias'",
+          "Configuração de scripts de desenvolvimento com tsx ou ts-node-dev"
+        ],
+        "tempoEstimado": "6 horas"
+      },
+      {
+        "etapa": "Etapa 2",
+        "titulo": "Tipagem Avançada e Segurança de Tipos",
+        "conteudos": [
+          "Union Types, Intersection Types e Type Guards (typeof, instanceof)",
+          "Utilização do tipo 'unknown' como alternativa segura ao 'any'",
+          "Utility Types essenciais (Partial, Pick, Omit, Readonly)",
+          "Introdução a Generics para criação de componentes e funções reutilizáveis"
+        ],
+        "tempoEstimado": "8 horas"
+      },
+      {
+        "etapa": "Etapa 3",
+        "titulo": "TypeScript com Express",
+        "conteudos": [
+          "Instalação e configuração de pacotes de tipos (@types/express, @types/node)",
+          "Tipagem estrita de Middlewares, Request, Response e NextFunction",
+          "Estendendo definições de tipos globais (ex: injetar usuário tipado no req.user)",
+          "Validação de payloads de entrada com Zod integrado ao fluxo do Express"
+        ],
+        "tempoEstimado": "10 horas"
+      },
+      {
+        "etapa": "Etapa 4",
+        "titulo": "Arquitetura, Build e Produção",
+        "conteudos": [
+          "Compilação do código TypeScript para JavaScript puro (dist/outDir)",
+          "Resolução de caminhos relativos de importação com tsconfig-paths",
+          "Práticas de segurança na transpilação e tratamento de erros estritos",
+          "Configuração de Docker multi-stage para builds eficientes de produção"
+        ],
+        "tempoEstimado": "8 horas"
+      }
+    ]
+  },
+  "diagnosticAssessment": {
+    "questoes": [
+      {
+        "id": 1,
+        "enunciado": "No TypeScript, qual é a principal diferença de comportamento de segurança em tempo de compilação entre os tipos 'any' e 'unknown'?",
+        "alternativas": [
+          "A) Não há diferença; ambos desativam completamente a checagem de tipos do compilador.",
+          "B) O tipo 'any' permite qualquer operação sem validação, enquanto o 'unknown' exige que você verifique ou converta o tipo (Type Assertion/Guard) antes de realizar operações nele.",
+          "C) O tipo 'unknown' só pode aceitar valores nulos ou indefinidos, enquanto 'any' aceita tudo.",
+          "D) O compilador não permite atribuir nenhum valor a variáveis declaradas como 'unknown'."
+        ],
+        "respostaCorreta": "B",
+        "explicacao": "O tipo 'unknown' é a contraparte segura do 'any'. Embora você possa atribuir qualquer valor a uma variável 'unknown', você não pode chamar métodos ou propriedades dela sem antes provar para o compilador que tipo de dado ela realmente contém (usando typeof, instanceof ou type assertions)."
+      },
+      {
+        "id": 2,
+        "enunciado": "Ao estruturar uma aplicação Express em TypeScript, como devemos tipar o objeto de requisição (Request) para garantir que o corpo (body) esperado seja rigidamente checado pelo compilador?",
+        "alternativas": [
+          "A) Atribuindo o tipo 'any' ao corpo diretamente no controller.",
+          "B) Passando um tipo genérico para a interface Request do Express, como 'Request<ParamsDictionary, any, MeuBodyCustomizado>'",
+          "C) O Express não suporta tipagem do corpo da requisição nativamente, sendo necessário usar bibliotecas externas de conversão de código.",
+          "D) Renomeando a variável 'req' para 'request' para que o TypeScript detecte o tipo automaticamente."
+        ],
+        "respostaCorreta": "B",
+        "explicacao": "A definição de tipos do Express para o tipo 'Request' aceita argumentos genéricos na seguinte ordem: Request<Params, ResBody, ReqBody, ReqQuery>. Passando a sua interface no terceiro parâmetro genérico, o TypeScript garante a tipagem estrita do 'req.body'."
+      },
+      {
+        "id": 3,
+        "enunciado": "Qual das seguintes opções no arquivo 'tsconfig.json' é responsável por impedir que variáveis tenham implicitamente o tipo 'any' caso o programador esqueça de declará-lo?",
+        "alternativas": [
+          "A) \"target\": \"ESNext\"",
+          "B) \"noImplicitAny\": true",
+          "C) \"strictNullChecks\": false",
+          "D) \"moduleResolution\": \"node\""
+        ],
+        "respostaCorreta": "B",
+        "explicacao": "A flag 'noImplicitAny' levanta erros de compilação em qualquer expressão ou declaração que resulte em um tipo 'any' implícito, forçando o desenvolvedor a escrever um código mais seguro e tipado."
+      },
+      {
+        "id": 4,
+        "enunciado": "Suponha que você tenha um tipo 'Usuario' completo com propriedades como id, nome, email, senha e dataCriacao. Você quer criar um tipo para a rota de atualização (PATCH) onde todos os campos originais do usuário se tornem opcionais. Qual Utility Type do TypeScript resolve isso de forma limpa?",
+        "alternativas": [
+          "A) Omit<Usuario, 'id'>",
+          "B) Pick<Usuario, 'nome' | 'email'>",
+          "C) Partial<Usuario>",
+          "D) Readonly<Usuario>"
+        ],
+        "respostaCorreta": "C",
+        "explicacao": "O Utility Type 'Partial<T>' constrói um novo tipo mapeando todas as propriedades de T como opcionais (adicionando o modificador '?'). É ideal para payloads de atualização parcial (PATCH)."
+      },
+      {
+        "id": 5,
+        "enunciado": "Qual é o principal benefício do uso de 'Generics' (<T>) no desenvolvimento de APIs robustas em TypeScript?",
+        "alternativas": [
+          "A) Permitir que o código TypeScript seja executado diretamente no navegador sem compilar.",
+          "B) Criar componentes, classes ou funções que funcionem com múltiplos tipos de dados, sem abrir mão da segurança de tipagem estrita no momento em que são utilizados.",
+          "C) Forçar que todas as variáveis do projeto compartilhem o mesmo espaço de memória.",
+          "D) Desativar avisos do compilador sobre dependências não utilizadas."
+        ],
+        "respostaCorreta": "B",
+        "explicacao": "Generics fornecem uma forma de criar código reutilizável. Em vez de fixar um tipo específico ou apelar para o 'any', os Generics permitem passar o tipo como um parâmetro no momento da chamada da função ou instanciação da classe."
+      }
+    ]
+  }
+}

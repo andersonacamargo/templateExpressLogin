@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import db from './models/index.js'; 
 import { autenticar, somenteAdmin } from './middleware/auth.js';
 import * as authController from './controllers/authController.js';
+import studyRoutes from './routes/studyRoutes.js';
 const app = express();
 app.use(cors()); // Permite cross plataform para utilizar o client e server em localhost
 app.use(express.json()); // Permite leitura de JSON
@@ -17,10 +18,15 @@ app.post('/registrar',
 // Rota pública: login e geração do token
 app.post('/login', authController.login);
 
-// Rota protegida: acessível para qualquer usuário autenticado
-app.get('/painel', autenticar, (req, res) => {
-  res.send(`Olá, ${req.usuario.nome}. Seu cargo é: ${req.usuario.cargo}`);
-});
+
+
+// Rotas da aplicação
+app.use('/api', studyRoutes);
+
+const PORT = process.env.PORT || 3000;
+
+// Sincroniza o banco de dados e inicia o servidor
+
 
 // Sincroniza os modelos com o banco e inicia o servidor
 db.sequelize.sync().then(() => {

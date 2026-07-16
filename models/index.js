@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 import createUserModel from './User.js'; // Import the model factory function
 import createPostModel from './Post.js'; // Import the model factory function
+import createStudyPlanModel from './studyPlan.js'; // Import the model factory function
 
 dotenv.config(); // Carrega variáveis do .env
 
@@ -24,6 +25,7 @@ db.sequelize = sequelize;
 // Inicializa o modelo passando a instância do sequelize
 db.User = createUserModel(sequelize, Sequelize);
 db.Post = createPostModel(sequelize, Sequelize); 
+db.StudyPlan = createStudyPlanModel(sequelize, Sequelize); 
 
 // Define o relacionamento (FK)
 db.Post.belongsTo(db.User, { foreignKey: 'userID', as: 'autor' });

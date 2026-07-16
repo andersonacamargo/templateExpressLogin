@@ -1,0 +1,115 @@
+{
+    "targetSubject": "JavaScript para Backend (Node.js & Express)",
+    "studyPlan": {
+      "cronograma": [
+        {
+          "etapa": "Etapa 1",
+          "titulo": "Arquitetura e Fundamentos do Node.js",
+          "conteudos": [
+            "Como funciona o V8 e o Runtime do Node.js",
+            "O Event Loop, Call Stack, Task Queue e Microtasks",
+            "Módulos nativos essenciais (fs, path, http, crypto)",
+            "Gerenciamento de dependências com npm, yarn e pnpm"
+          ],
+          "tempoEstimado": "6 horas"
+        },
+        {
+          "etapa": "Etapa 2",
+          "titulo": "Desenvolvimento de APIs com Express",
+          "conteudos": [
+            "Configuração de rotas, verbos HTTP e tratamento de requisições",
+            "Criação e aplicação de Middlewares customizados",
+            "Tratamento global de erros de forma robusta",
+            "Migração e estruturação do projeto utilizando ES Modules (import/export)"
+          ],
+          "tempoEstimado": "8 horas"
+        },
+        {
+          "etapa": "Etapa 3",
+          "titulo": "Persistência e Modelagem de Dados",
+          "conteudos": [
+            "Introdução ao Sequelize e conexão com PostgreSQL",
+            "Criação de Models, Migrations e Seeders",
+            "Modelagem de Relacionamentos (1:1, 1:N, N:N)",
+            "Consultas otimizadas e paginação de resultados"
+          ],
+          "tempoEstimado": "10 horas"
+        },
+        {
+          "etapa": "Etapa 4",
+          "titulo": "Segurança, Autenticação e Deploy",
+          "conteudos": [
+            "Criptografia de senhas utilizando bcrypt ou argon2",
+            "Autenticação Stateless com JSON Web Tokens (JWT)",
+            "Validação de dados de entrada com schemas (Zod)",
+            "Gerenciamento de variáveis de ambiente (.env) e segurança em produção"
+          ],
+          "tempoEstimado": "8 horas"
+        }
+      ]
+    },
+    "diagnosticAssessment": {
+      "questoes": [
+        {
+          "id": 1,
+          "enunciado": "O Node.js é classificado como single-threaded na sua thread principal de execução, porém ele lida com operações assíncronas de I/O de forma extremamente eficiente e não-bloqueante. Qual componente do ecossistema do Node.js é responsável por gerenciar a thread pool (segundo plano) para lidar com essas tarefas pesadas de I/O?",
+          "alternativas": [
+            "A) A engine Google V8",
+            "B) A biblioteca libuv",
+            "C) O interpretador interno do CommonJS",
+            "D) O framework Express"
+          ],
+          "respostaCorreta": "B",
+          "explicacao": "A libuv é uma biblioteca multiplataforma escrita em C que dá suporte ao comportamento assíncrono no Node.js. Ela gerencia um pool de threads (geralmente de 4 threads por padrão) para executar tarefas pesadas do sistema, como operações de sistema de arquivos (FS) e consultas de DNS."
+        },
+        {
+          "id": 2,
+          "enunciado": "Ao utilizar ES Modules (import/export) nativamente no Node.js moderno, qual regra essencial deve ser seguida ao importar módulos locais em seus arquivos (como controladores ou rotas)?",
+          "alternativas": [
+            "A) Deve-se utilizar a função 'require()' obrigatoriamente.",
+            "B) Os arquivos locais devem ser importados obrigatoriamente explicitando a extensão do arquivo (ex: '.js').",
+            "C) O Node.js aceita qualquer importação sem extensão, idêntico ao ecossistema React/Webpack padrão.",
+            "D) É obrigatório que todos os arquivos tenham a extensão '.mjs'."
+          ],
+          "respostaCorreta": "B",
+          "explicacao": "No sistema nativo do Node.js para ES Modules (ativado com \"type\": \"module\" no package.json), a resolução de caminhos locais exige caminhos relativos completos, o que inclui especificar obrigatoriamente a extensão do arquivo (como '.js' ou '.mjs')."
+        },
+        {
+          "id": 3,
+          "enunciado": "Em uma rota do Express, o que acontece se um erro assíncrono for disparado dentro de um controller (por exemplo, falha de conexão com o banco de dados) e ele não for capturado em um bloco try/catch ou passado para a função next()?",
+          "alternativas": [
+            "A) O Express captura o erro automaticamente e retorna o status 500.",
+            "B) O servidor para de responder apenas aquela requisição, mas continua ativo para as demais sem problemas.",
+            "C) A aplicação Node.js pode travar abruptamente (unhandled rejection) ou a requisição ficará 'pendurada' infinitamente até estourar timeout no cliente.",
+            "D) O próprio banco de dados resolve o erro e retorna uma resposta mockada."
+          ],
+          "respostaCorreta": "C",
+          "explicacao": "Erros assíncronos não capturados em versões anteriores do Express deixavam as requisições travadas sem resposta (timeout). No Node.js moderno, rejeições não tratadas (unhandled Promise rejections) podem causar o encerramento do processo do servidor (crash). Por isso, sempre capture os erros e encaminhe-os usando next(error)."
+        },
+        {
+          "id": 4,
+          "enunciado": "Ao utilizar o ORM Sequelize com PostgreSQL, qual tipo de dados nativo do Sequelize é o mais recomendado para mapear IDs únicos que previnem colisões em sistemas distribuídos e de larga escala?",
+          "alternativas": [
+            "A) DataTypes.INTEGER com auto_increment",
+            "B) DataTypes.STRING",
+            "C) DataTypes.UUID com defaultValue definido como DataTypes.UUIDV4",
+            "D) DataTypes.FLOAT"
+          ],
+          "respostaCorreta": "C",
+          "explicacao": "UUIDV4 gera identificadores universais únicos de 128 bits quase impossíveis de colidirem. Usá-los como chave primária é uma prática recomendada para evitar previsibilidade de IDs de registros e facilitar migrações/sincronias entre diferentes bases de dados."
+        },
+        {
+          "id": 5,
+          "enunciado": "Qual o papel principal de um Middleware no fluxo de execução de uma requisição em uma aplicação desenvolvida com Express?",
+          "alternativas": [
+            "A) Conectar de forma assíncrona ao banco de dados pulando as rotas.",
+            "B) Ser executado antes do controller principal para inspecionar, alterar ou até mesmo barrar a requisição com base em regras (ex: validar autenticação/JWT).",
+            "C) Substituir os Controllers para otimizar a velocidade de renderização da página.",
+            "D) Excluir automaticamente arquivos temporários da memória RAM do servidor."
+          ],
+          "respostaCorreta": "B",
+          "explicacao": "Middlewares no Express são funções que têm acesso aos objetos de requisição (req), resposta (res) e à próxima função middleware no ciclo (next). Eles servem perfeitamente para interceptar requisições, rodar validações (como autenticação JWT ou validação de schemas com Zod) antes de deixar o fluxo chegar ao controller principal."
+        }
+      ]
+    }
+  }
